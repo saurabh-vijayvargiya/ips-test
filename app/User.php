@@ -31,4 +31,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Module', 'user_completed_modules');
     }
+
+    /**
+     * Get the orders owned by the user.
+     */
+    public function get_orders()
+    {
+        return $this->hasMany('App\Order', 'user_id');
+    }
 }

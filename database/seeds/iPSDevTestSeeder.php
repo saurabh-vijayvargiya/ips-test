@@ -1,5 +1,6 @@
 <?php
 
+use App\Course;
 use Illuminate\Database\Seeder;
 use App\Module;
 
@@ -12,8 +13,26 @@ class iPSDevTestSeeder extends Seeder
      */
     public function run()
     {
+        // Inserting courses.
+        Course::insert([
+          [
+            'id' => 'ipa',
+            'name' => 'iPhone Photo Academy'
+          ],
 
-        for ($i = 1; $i <= 7; $i++){
+          [
+            'id' => 'iea',
+            'name' => 'iPhone Editing Academy'
+          ],
+
+          [
+            'id' => 'iaa',
+            'name' => 'iPhone Art Academy'
+          ]
+        ]);
+
+        // Inserting modules in the modules table.
+        for ($i = 1; $i <= 7; $i++) {
             Module::insert([
                 [
                     'course_key' => 'ipa',
@@ -31,7 +50,5 @@ class iPSDevTestSeeder extends Seeder
                 ]
             ]);
         }
-
-
     }
 }
