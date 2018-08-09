@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Helpers\InfusionsoftHelper;
+use App\Tag;
 use Request;
 use Storage;
 use Response;
@@ -28,10 +29,23 @@ class InfusionsoftController extends Controller
     }
 
     public function testInfusionsoftIntegrationGetAllTags(){
+        if (count($tags = Tag::all()) > 0) {
+            return Response::json($tags);
+        } else {
+            $infusionsoft = new InfusionsoftHelper();
+            $tags = $infusionsoft->getAllTags();
+            // Checking if app has Infusionsoft auth.
+            if (is_bool($tags)) {
+                $this->authorizeInfusionsoft();
+            }
+            $tags = $tags->all();
+            foreach ($tags as $tag) {
+                $tagArray = $tag->attributesToArray();
+                Tag::create($tagArray);
+            }
 
-        $infusionsoft = new InfusionsoftHelper();
-
-        return Response::json($infusionsoft->getAllTags());
+            return Response::json($tags);
+        }
     }
 
     public function testInfusionsoftIntegrationCreateContact(){
