@@ -15,7 +15,10 @@ class CreateModulesTable extends Migration
     {
         Schema::create('modules', function (Blueprint $table) {
             $table->increments('id');
+
             $table->string('course_key');
+            $table->foreign('course_key')->references('id')->on('courses')->onDelete('cascade');
+
             $table->string('name');
             $table->timestamps();
         });
@@ -41,7 +44,9 @@ class CreateModulesTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('user_modules');
         Schema::dropIfExists('modules');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }
