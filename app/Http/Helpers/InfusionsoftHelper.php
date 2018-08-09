@@ -90,5 +90,14 @@ class InfusionsoftHelper
         }
     }
 
+    public function removeTag($contact_id, $tag_id)
+    {
+        try {
+            return Infusionsoft::contacts('xml')->removeFromGroup($contact_id, $tag_id);
 
+        } catch (\Exception $e) {
+            Log::error((string) $e);
+            return false;
+        }
+    }
 }
